@@ -73,5 +73,10 @@ public class Graber extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
+    public void GrabberDrive( double DriveSpeed ) {
+       
+        mots.set( DriveSpeed );   
+    }
+
 }
 

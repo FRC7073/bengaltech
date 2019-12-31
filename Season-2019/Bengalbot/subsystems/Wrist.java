@@ -73,5 +73,9 @@ public class Wrist extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-}
+    public void WristDrive( double DriveSpeed ) {
+       
+        mot.set( DriveSpeed );   
+    }
 
+}

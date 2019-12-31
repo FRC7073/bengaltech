@@ -73,5 +73,10 @@ public class Elevator extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
+    public void ElevatorDrive( double DriveSpeed ) {
+       
+        mot.set( DriveSpeed );   
+    }
+
 }
 

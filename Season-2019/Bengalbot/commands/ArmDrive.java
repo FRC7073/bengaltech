@@ -45,6 +45,9 @@ public class ArmDrive extends Command {
     protected void execute() {
         double DriveSpeed;      // -1 to +1, reverse to forward
         double Scaler;
+        double AxisValue;
+
+        // Read y joystick axis and control arm motor
 
         Scaler = -Robot.oi.getJoystick2().getThrottle();
         // System.out.println("Scaler: " + Scaler);
@@ -54,6 +57,77 @@ public class ArmDrive extends Command {
         DriveSpeed = -Robot.oi.getJoystick2().getY() * Scaler;
 
         Robot.arm.ArmDrive( DriveSpeed);
+
+        //
+        // Read hat switch and control wrist motor
+        //
+
+        AxisValue = Robot.oi.getJoystick2().getRawAxis(4);
+        if (AxisValue < -0.1)
+        {
+            // Hat switch is pushed up, lower wrist
+            DriveSpeed = -Scaler;
+            Robot.wrist.WristDrive( DriveSpeed);        
+        }
+        else if (AxisValue > 0.1)
+        {
+            // Hat switch is pushed down, raise wrist
+            DriveSpeed = Scaler;
+            Robot.wrist.WristDrive( DriveSpeed);        
+        }
+        else
+        {
+            // Hat switch is in center, do not move wrist
+            DriveSpeed = 0;
+            Robot.wrist.WristDrive( DriveSpeed);        
+        }
+
+        //
+        // Read left thumb switches and control elevator motor
+        //
+
+        if (Robot.oi.getJoystick2().getRawButton(5) == true)
+        {
+            // Raise alevator
+            DriveSpeed = Scaler;
+            Robot.elevator.ElevatorDrive( DriveSpeed);
+        }
+        else if (Robot.oi.getJoystick2().getRawButton(3) == true)
+        {
+            // Lower elevator
+            DriveSpeed = -Scaler;
+            Robot.elevator.ElevatorDrive( DriveSpeed);
+        }
+        else 
+        {
+            // Elevator stop, neither button pushed
+            DriveSpeed = 0;
+            Robot.elevator.ElevatorDrive( DriveSpeed);
+        }
+
+        //
+        // Read trigger and side switch and control grabber notor
+        //
+
+        if (Robot.oi.getJoystick2().getRawButton(1) == true)
+        {
+            //  Grab ball
+            DriveSpeed = Scaler;
+            Robot.graber.GrabberDrive( DriveSpeed);
+        }
+        else if (Robot.oi.getJoystick2().getRawButton(2) == true)
+        {
+            // Push ball out
+            DriveSpeed = -Scaler;
+            Robot.graber.GrabberDrive( DriveSpeed);
+        }
+        else 
+        {
+            // Grabber stop, neither button pushed
+            DriveSpeed = 0;
+            Robot.graber.GrabberDrive( DriveSpeed);
+        }
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
