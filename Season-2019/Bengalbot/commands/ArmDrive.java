@@ -62,14 +62,14 @@ public class ArmDrive extends Command {
         // Read hat switch and control wrist motor
         //
 
-        AxisValue = Robot.oi.getJoystick2().getRawAxis(4);
-        if (AxisValue < -0.1)
+        // AxisValue = Robot.oi.getJoystick2().getRawAxis(4);
+        if (Robot.oi.getJoystick2().getRawButton(4) == true)
         {
             // Hat switch is pushed up, lower wrist
             DriveSpeed = -Scaler;
             Robot.wrist.WristDrive( DriveSpeed);        
         }
-        else if (AxisValue > 0.1)
+        else if (Robot.oi.getJoystick2().getRawButton(6) == true)
         {
             // Hat switch is pushed down, raise wrist
             DriveSpeed = Scaler;
@@ -84,7 +84,7 @@ public class ArmDrive extends Command {
 
         //
         // Read left thumb switches and control elevator motor
-        //
+        // Elevator motor is not being used
 
         if (Robot.oi.getJoystick2().getRawButton(5) == true)
         {
